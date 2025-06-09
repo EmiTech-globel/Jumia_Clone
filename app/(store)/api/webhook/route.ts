@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
-
+  }
   // ✅ Always respond immediately
   return NextResponse.json({ received: true });
 }
