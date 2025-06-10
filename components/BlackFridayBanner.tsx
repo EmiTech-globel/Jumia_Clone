@@ -1,5 +1,7 @@
 import { getActiveSaleByCouponCode } from "@/sanity/lib/sales/getActiveSalesByCouponCode";
 import { COUPON_CODES } from "@/sanity/lib/sales/couponCodes";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { Card, CardContent } from "./ui/card";
 async function BlackFridayBanner() {
     const sale =await getActiveSaleByCouponCode(COUPON_CODES.BFRIDAY);
 
@@ -8,6 +10,11 @@ async function BlackFridayBanner() {
     }
 
     return (
+    <Carousel>
+        <CarouselContent>
+            <CarouselItem>
+                <Card>
+                    <CardContent>
     <div className="bg-gradient-to-r from-red-600 to-black text-white
      px-6 py-10 mx-4 mt-2 rounded-lg shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
@@ -31,9 +38,16 @@ async function BlackFridayBanner() {
                 </span>
            </div>
          </div>
-         </div>
+        </div>
       </div>    
     </div>
+                    </CardContent>
+                </Card>
+            </CarouselItem>
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+    </Carousel>
 );
 }
 
