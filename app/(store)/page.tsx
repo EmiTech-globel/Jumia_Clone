@@ -1,15 +1,17 @@
 
 import { getAllProducts } from "@/sanity/lib/products/getAllProducts";
 import { getAllCategories } from "@/sanity/lib/products/getAllCategories";
+import { getSale } from "@/sanity/lib/sales/getSale";
 import ProductsView from "@/components/ProductsView";
 import BlackFridayBanner from "@/components/BlackFridayBanner";
 
 export const dynamic = "force-static"
-export const revalidate = 60; //revaildate at most every 60 seconds
+export const revalidate = 3600; //revaildate at most every 1hr
 
 export default async function Home() {
   const products = await getAllProducts();
   const categories = await getAllCategories();
+  const sales = await getSale();
 
   console.log(
     crypto.randomUUID().slice(0,5) +
@@ -19,7 +21,7 @@ export default async function Home() {
 
   return (
     <div>
-      <BlackFridayBanner />
+      <BlackFridayBanner sales={sales} />
       
       <div className="flex flex-col items-center justify-top min-h-screen 
       bg-gray-10 p-5">

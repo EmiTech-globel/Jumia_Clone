@@ -6,7 +6,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-static"
-export const revalidate = 60; //revaildate at most every 60 seconds
+export const revalidate = 3600; //revaildate at most every 60 seconds
 
 async function ProductPage({
     params,
