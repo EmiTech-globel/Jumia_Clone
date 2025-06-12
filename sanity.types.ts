@@ -68,6 +68,21 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Address = {
+  _id: string;
+  _type: "address";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  default?: boolean;
+  createdAt?: string;
+};
+
 export type Sale = {
   _id: string;
   _type: "sale";
@@ -109,6 +124,12 @@ export type Order = {
   totalPrice?: number;
   currency?: string;
   amountDiscount?: number;
+  address?: {
+    state?: string;
+    city?: string;
+    address?: string;
+    name?: string;
+  };
   status?: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
   orderDate?: string;
 };
@@ -281,8 +302,26 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Sale | Order | Product | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Address | Sale | Order | Product | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/lib/addresses/getAllAddress.ts
+// Variable: ALL_ADDRESS_QUERY
+// Query: *[_type == "address"] | order(publishedAt desc)
+export type ALL_ADDRESS_QUERYResult = Array<{
+  _id: string;
+  _type: "address";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  default?: boolean;
+  createdAt?: string;
+}>;
+
 // Source: ./sanity/lib/orders/getMyOrders.tsx
 // Variable: MY_ORDERS_QUERY
 // Query: *[_type == "order" && clerkUserId == $userId] | order(orderDate desc){    _id,    orderNumber,    orderDate,    amountDiscount,    status,    totalPrice,    currency,    products[]{      quantity,      product->{        _id,        name,        image,        price,        currency      }    }  }
@@ -631,6 +670,7 @@ export type SALE_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "\n    *[_type == \"address\"] | order(publishedAt desc)\n  ": ALL_ADDRESS_QUERYResult;
     "\n  *[_type == \"order\" && clerkUserId == $userId] | order(orderDate desc){\n    _id,\n    orderNumber,\n    orderDate,\n    amountDiscount,\n    status,\n    totalPrice,\n    currency,\n    products[]{\n      quantity,\n      product->{\n        _id,\n        name,\n        image,\n        price,\n        currency\n      }\n    }\n  }\n": MY_ORDERS_QUERYResult;
     "\n        *[_type == \"category\"] | order(name asc)\n        ": ALL_CATEGORIES_QUERYResult;
     "\n    *[_type == \"product\"] | order(name asc)\n  ": ALL_PRODUCT_QUERYResult;

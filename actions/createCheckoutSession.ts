@@ -2,6 +2,7 @@
 
 import { imageUrl } from "@/lib/imageUrl";
 import stripe from "@/lib/stripe";
+import { Address } from "@/sanity.types";
 import { BasketItem } from "@/store/store";
 
 export type Metadata = {
@@ -9,6 +10,7 @@ export type Metadata = {
     customerName: string;
     customerEmail: string;
     clerkUserId: string;
+    address?: Address | null;
 };
 
 export type GroupBasketItem ={
@@ -50,7 +52,13 @@ export async function createCheckoutSession(
             customer: customerId,
              customer_creation: customerId ? undefined : 'always',
              customer_email: !customerId ? metadata.customerEmail : undefined,
-             metadata,
+                metadata: {
+                  orderNumber: metadata.orderNumber,
+                  customerName: metadata.customerName,
+                  customerEmail: metadata.customerEmail,
+                  clerkUserId: metadata.clerkUserId!,
+                  address: JSON.stringify(metadata.address),
+              },
              mode: 'payment',
              allow_promotion_codes: true,
              success_url: successUrl,
