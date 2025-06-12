@@ -1,11 +1,12 @@
 'use client';
 
 import { useRef } from "react";
-import { Sale } from "@/sanity.types";
+
 import Autoplay from "embla-carousel-autoplay";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { SALE_QUERYResult } from "@/sanity.types";
 
-function BlackFridayBanner({ sales }: { sales: Sale[] }) {
+function BlackFridayBanner({ sales }: { sales: SALE_QUERYResult }) {
     // Create a ref for the plugin instance to avoid re-creating it on every render
     const autoplay = useRef(
         Autoplay({ delay: 4000, stopOnInteraction: false })

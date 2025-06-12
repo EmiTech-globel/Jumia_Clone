@@ -21,7 +21,7 @@ export default async function Home() {
 
   return (
     <div>
-      <BlackFridayBanner sales={sales} />
+      { sales && <BlackFridayBanner sales={sales} /> }
       
       <div className="flex flex-col items-center justify-top min-h-screen 
       bg-gray-10 p-5">
