@@ -22,7 +22,7 @@ function Header() {
          className="text-2xl font-bold text-blue-500 hover:opacity-50
          cursor-pointer mx-auto sm:mx-0"
         >
-          Shopr
+          SwiftCart
         </Link>
 
         <Form 

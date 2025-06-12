@@ -8,10 +8,11 @@ function ProductThumb({ product }: { product: Product }) {
     const isOutofStock = product.stock != null && product.stock <= 0;
 
   return (
+    <div className=" bg-white rounded-lg border border-gray-200
+        shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden w-full">
    <Link
      href={`/product/${product.slug?.current}`}
-     className={`group flex flex-col bg-white rounded-lg border border-gray-200
-        shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden
+     className={`group flex flex-col 
         ${isOutofStock ? "opacity-50" : ""}
         `}
    >
@@ -55,11 +56,12 @@ function ProductThumb({ product }: { product: Product }) {
           ₦{product.price?.toFixed(2)}
         </p>
 
-        <div className="mt-6">
-          <AddToBasketButton product={product} disabled={isOutofStock}/>
-        </div>
     </div>
    </Link>
+        <div className="px-4 pb-4">
+          <AddToBasketButton product={product} disabled={isOutofStock}/>
+        </div>
+   </div>
   );
 }
 
