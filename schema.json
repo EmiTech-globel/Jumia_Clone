@@ -402,6 +402,20 @@
         },
         "optional": true
       },
+      "clerkUserId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "zip": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "createdAt": {
         "type": "objectAttribute",
         "value": {

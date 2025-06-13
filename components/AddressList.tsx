@@ -3,10 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Button } from "@/components/ui/button";
 import { Address } from "@/sanity.types";
 import { useEffect, useState } from "react";
 import { getAllAddress } from "@/sanity/lib/addresses/getAllAddress";
+import AddAddressModal from "./AddAddressModal";
 
 interface AddressListProps {
   onSelect: (address: Address) => void;
@@ -64,9 +64,7 @@ const AddressList = ({ onSelect, selectedAddress }: AddressListProps) => {
               </div>
             ))}
           </RadioGroup>
-          <Button variant="outline" className="w-full mt-4">
-            Add New Address
-          </Button>
+          <AddAddressModal onAddressAdded={() => window.location.reload()} />
         </CardContent>
       </Card>
     )

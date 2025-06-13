@@ -46,7 +46,18 @@ export const addressType = defineType({
       description: "Is this the default shipping address?",
       initialValue: false,
     }),
-
+    defineField({
+      name: "clerkUserId",
+      title: "User ID",
+      type: "string",
+      validation: (Rule) => Rule.required().email(), 
+    }),
+    defineField({
+     name: "zip",
+     title: "ZIP/Postal Code",
+     type: "string",
+     validation: (Rule) => Rule.min(3).max(10),
+   }),
     defineField({
       name: "createdAt",
       title: "Created At",

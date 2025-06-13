@@ -1,18 +1,15 @@
-import { defineQuery } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
+
+import { client } from "@/sanity/lib/client"; 
 import { Address } from "@/sanity.types";
 
 export const getAllAddress = async (): Promise<Address[]> => {
-  const ALL_ADDRESS_QUERY = defineQuery(`
-    *[_type == "address"] | order(publishedAt desc)
-  `);
+  const query = `*[_type == "address"] | order(publishedAt desc)`;
 
   try {
-    const result = await sanityFetch({ query: ALL_ADDRESS_QUERY });
-    return result?.data || [];
+    const result: Address[] = await client.fetch(query);
+    return result || [];
   } catch (error) {
-    console.error("Error fetching addresses:", error);
+    console.error("Failed to fetch addresses:", error);
     return [];
   }
 };
-// This function fetches all addresses from Sanity and returns them as an array of Address objects.
