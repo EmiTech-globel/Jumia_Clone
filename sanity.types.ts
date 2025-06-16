@@ -81,7 +81,7 @@ export type Address = {
   state?: string;
   default?: boolean;
   clerkUserId?: string;
-  zip?: string;
+  postalCode?: string;
   createdAt?: string;
 };
 

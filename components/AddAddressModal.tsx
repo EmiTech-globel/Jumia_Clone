@@ -13,10 +13,8 @@ const AddAddressModal = ({ onAddressAdded }: { onAddressAdded: () => void }) => 
   const [form, setForm] = useState({
     name: "",
     address: "",
-    street: "",
     city: "",
     state: "",
-    country: "",
     postalCode: "",
     email: user?.primaryEmailAddress?.emailAddress || "",
   });
@@ -54,26 +52,31 @@ const AddAddressModal = ({ onAddressAdded }: { onAddressAdded: () => void }) => 
         </DialogHeader>
         <div className="space-y-4">
          <div>
-            <Label>Address Name</Label>
+            <Label className="my-4">Address Name</Label>
             <Input name="name" value={form.name} onChange={handleChange} />
           </div>
           <div>
-            <Label>Street Address</Label>
+            <Label className="my-4">Street Address</Label>
             <Input name="address" value={form.address} onChange={handleChange} />
           </div>
           <div>
-            <Label>City</Label>
+            <Label className="my-4">Zip/Postal Code</Label>
+            <Input name="postalCode" value={form.postalCode} onChange={handleChange} />
+          </div>
+          <div>
+            <Label className="my-4">City</Label>
             <Input name="city" value={form.city} onChange={handleChange} />
           </div>
           <div>
-            <Label>State</Label>
+            <Label className="my-4">State</Label>
             <Input name="state" value={form.state} onChange={handleChange} />
           </div>
           <div>
-            <Label>Email</Label>
+            <Label className="my-4">Email</Label>
             <Input name="email" value={form.email} onChange={handleChange} />
           </div>
-          <Button onClick={handleSubmit} disabled={loading} className="w-full">
+          <Button onClick={handleSubmit} disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600
+          px-4 py-2 rounded-lg text-white font-medium transition-colors duration-200">
             {loading ? "Saving..." : "Save Address"}
           </Button>
         </div>

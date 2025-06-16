@@ -50,10 +50,10 @@ export const addressType = defineType({
       name: "clerkUserId",
       title: "User ID",
       type: "string",
-      validation: (Rule) => Rule.required().email(), 
+      validation: (Rule) => Rule.required(), 
     }),
     defineField({
-     name: "zip",
+     name: "postalCode",
      title: "ZIP/Postal Code",
      type: "string",
      validation: (Rule) => Rule.min(3).max(10),

@@ -409,7 +409,7 @@
         },
         "optional": true
       },
-      "zip": {
+      "postalCode": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

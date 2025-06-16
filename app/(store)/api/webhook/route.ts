@@ -69,8 +69,9 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     total_details,
   } = session;
 
-  const { orderNumber, customerName, customerEmail, clerkUserId } =
-    metadata as Metadata;
+  const { orderNumber, customerName, customerEmail, clerkUserId, address } =
+    metadata as unknown as Metadata & { address: string };
+    const parsedAddress = address ? JSON.parse(address) : null;
 
   const lineItemsWithProduct = await stripe.checkout.sessions.listLineItems(id, {
     expand: ["data.price.product"],
@@ -102,6 +103,14 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
     totalPrice: amount_total ? amount_total / 100 : 0,
     status: "paid",
     orderDate: new Date().toISOString(),
+    address: parsedAddress
+    ? {
+      name: parsedAddress.name,
+      address: parsedAddress.address,
+      state: parsedAddress.state,
+      zip: parsedAddress.zip,
+      city: parsedAddress.city,
+    } : null,
   });
 
   return order;
