@@ -9,6 +9,7 @@ import { VisualEditing } from "next-sanity";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import { draftMode } from "next/headers";
 import { Toaster } from "react-hot-toast";
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: "SwiftCart | Shop the Latest Trends",
@@ -35,6 +36,7 @@ export default async function RootLayout({
             <Header />
             {children}
             <Toaster position="bottom-right" reverseOrder={false} />
+            <Analytics />
           </main>
 
           <SanityLive />
