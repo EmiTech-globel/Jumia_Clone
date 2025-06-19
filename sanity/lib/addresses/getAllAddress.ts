@@ -1,15 +1,19 @@
+// sanity/lib/addresses/getAllAddress.ts
+import { client } from "../client";
 
-import { client } from "@/sanity/lib/client"; 
-import { Address } from "@/sanity.types";
+export const getAllAddress = async (clerkUserId: string) => {
+  const query = `*[_type == "address" && clerkUserId == $clerkUserId] | order(default desc, createdAt desc) {
+    _id,
+    name,
+    address,
+    city,
+    state,
+    postalCode,
+    email,
+    default,
+    clerkUserId,
+    createdAt
+  }`;
 
-export const getAllAddress = async (): Promise<Address[]> => {
-  const query = `*[_type == "address"] | order(publishedAt desc)`;
-
-  try {
-    const result: Address[] = await client.fetch(query);
-    return result || [];
-  } catch (error) {
-    console.error("Failed to fetch addresses:", error);
-    return [];
-  }
+  return await client.fetch(query, { clerkUserId });
 };

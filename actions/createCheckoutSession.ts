@@ -13,7 +13,7 @@ export type Metadata = {
     address?: Address | null;
 };
 
-export type GroupBasketItem ={
+export type GroupBasketItem = {
     product: BasketItem["product"];
     quantity: number;
 };
@@ -27,6 +27,11 @@ export async function createCheckoutSession(
         const itemsWithPrice = items.filter((item) => !item.product.price);
         if (itemsWithPrice.length > 0) {
             throw new Error("Some items do not have a price");
+        }
+
+        // Validate address
+        if (!metadata.address) {
+            throw new Error("Shipping address is required");
         }
 
         // Search for existing customer by email
@@ -45,7 +50,7 @@ export async function createCheckoutSession(
             : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
          
          const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
-         const cancelUrl = `${baseUrl}/basket`;
+         const cancelUrl = `${baseUrl}/cart`;
 
         // Create a new customer if not found
         const session = await stripe.checkout.sessions.create({

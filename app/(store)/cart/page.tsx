@@ -111,7 +111,7 @@ function CartPage() {
           <h3 className="text-xl font-semibold">Order Summary</h3>
           <div className="mt-4 space-y-2">
             <p className="flex justity-between">
-              <span>Items:</span>
+              <span>Total: </span>
               <span>
                 ₦{useBasketStore.getState().getTotalPrice().toFixed(2)}
               </span>
