@@ -45,8 +45,8 @@ export async function createCheckoutSession(
           customerId = customers.data[0].id;
         }
 
-         const baseUrl = process.env.NODE_ENV === "production" && process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
+         const baseUrl = process.env.NODE_ENV === "production"
+            ? 'https://jumia-clone-kv9o.vercel.app'
             : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
          
          const successUrl = new URL('/success', baseUrl);
