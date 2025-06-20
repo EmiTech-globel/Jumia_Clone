@@ -1,12 +1,24 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-export default clerkMiddleware();
+const isProtectedRoute = createRouteMatcher([
+  '/cart(.*)',
+  '/categories(.*)',
+  '/orders(.*)',
+  '/product(.*)',
+  '/search(.*)',
+  // Add other protected routes
+]);
+
+export default clerkMiddleware((auth, req) => {
+  if (!isProtectedRoute(req)) return; // Skip auth for non-protected routes
+  
+  // Protect the route
+  auth();
+});
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
+    '/((?!_next|success|api|trpc).*)',
     '/(api|trpc)(.*)',
   ],
 };

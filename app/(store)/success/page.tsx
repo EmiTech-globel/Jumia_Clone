@@ -1,22 +1,34 @@
 'use client';
-
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import useBasketStore from "@/store/store";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 function SuccessPage(){
   const searchParams = useSearchParams();
+  const router = useRouter();
   const orderNumber = searchParams.get('orderNumber');
+  const fromStripe = searchParams.get('from_stripe');
   const clearBasket = useBasketStore((state) => state.clearBasket);
-//   const sessionId = searchParams.get('session_id');
 
   useEffect(() => {
-    if (orderNumber) {
+    // If coming from Stripe with order number
+    if (fromStripe && orderNumber) {
       clearBasket();
+      // Clean up the URL
+      router.replace('/success?orderNumber=' + orderNumber);
+      return;
     }
-  }, [orderNumber, clearBasket]);
+    
+    if (!orderNumber) {
+      router.push('/');
+    }
+  }, [orderNumber, fromStripe, clearBasket, router]);
+
+  if (!orderNumber) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">

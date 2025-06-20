@@ -49,7 +49,9 @@ export async function createCheckoutSession(
             ? `https://${process.env.VERCEL_URL}`
             : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
          
-         const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
+         const successUrl = new URL('/success', baseUrl);
+         successUrl.searchParams.set('session_id', '{CHECKOUT_SESSION_ID}');
+         successUrl.searchParams.set('orderNumber', metadata.orderNumber);
          const cancelUrl = `${baseUrl}/cart`;
 
         // Create a new customer if not found
@@ -66,7 +68,7 @@ export async function createCheckoutSession(
               },
              mode: 'payment',
              allow_promotion_codes: true,
-             success_url: successUrl,
+             success_url: successUrl.toString(),
             cancel_url: cancelUrl,
 
              line_items: items.map((item) => ({
