@@ -45,13 +45,11 @@ export async function createCheckoutSession(
           customerId = customers.data[0].id;
         }
 
-         const baseUrl = process.env.NODE_ENV === "production"
-            ? 'https://jumia-clone-kv9o.vercel.app'
-            : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+        const baseUrl = process.env.NODE_ENV === "production"
+         ? 'https://jumia-clone-kv9o.vercel.app'
+         : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
          
-         const successUrl = new URL('/success', baseUrl);
-         successUrl.searchParams.set('session_id', '{CHECKOUT_SESSION_ID}');
-         successUrl.searchParams.set('orderNumber', metadata.orderNumber);
+         const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`;
          const cancelUrl = `${baseUrl}/cart`;
 
         // Create a new customer if not found
@@ -68,7 +66,7 @@ export async function createCheckoutSession(
               },
              mode: 'payment',
              allow_promotion_codes: true,
-             success_url: successUrl.toString(),
+             success_url: successUrl,
             cancel_url: cancelUrl,
 
              line_items: items.map((item) => ({
